@@ -1,4 +1,5 @@
 using System;
+using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -25,6 +26,9 @@ public class PlayerController : MonoBehaviour
     //Attack
     public float RaycastLength;
     public LayerMask EnemiesLayer;
+    
+    //Coins
+    public int CoinCount = 0;
 
     public void OnDrawGizmosSelected()
     {
@@ -39,6 +43,7 @@ public class PlayerController : MonoBehaviour
     {
         Rigidbody = GetComponent<Rigidbody2D>();
         JumpCount = 0;
+        CoinCount = 0;
     }
 
     public void Update()
@@ -141,10 +146,11 @@ public class PlayerController : MonoBehaviour
             Rigidbody.linearVelocity = new Vector2(Rigidbody.linearVelocity.x, JumpVelocity);
         }
     }
-
+    
     public void CollectCoin()
     {
-        
+        CoinCount++;
+        UIManager.Instance.SetCoin(CoinCount);
     }
 
     private void OnCollisionEnter2D(Collision2D other)
