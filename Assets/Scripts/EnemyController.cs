@@ -26,7 +26,11 @@ public class EnemyController : MonoBehaviour
 
     private void CalculateDirection()
     {
-        if (Vector2.Distance(transform.position, _targetPoint.position) < 0.5)
+        var enemyX = transform.position.x;
+        var targetX = _targetPoint.position.x;
+        
+        Debug.Log("Asghar " + Mathf.Abs(targetX - enemyX));
+        if (Mathf.Abs(targetX - enemyX) < 0.1)
         {
             _currentPathIndex++;
             if (_currentPathIndex >= Path.Length)

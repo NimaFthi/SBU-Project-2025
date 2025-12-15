@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -81,12 +82,11 @@ public class PlayerController : MonoBehaviour
 
     private void HandleJumpAnimation()
     {
-        if (IsGrounded())
+        if (!IsGrounded())
         {
-            return;
+            SetAnimatorState(2);
         }
         
-        SetAnimatorState(2);
         float yVelocity = Rigidbody.linearVelocityY;
         int jumpState = 0;
         
@@ -139,6 +139,19 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(result.transform.gameObject);
             Rigidbody.linearVelocity = new Vector2(Rigidbody.linearVelocity.x, JumpVelocity);
+        }
+    }
+
+    public void CollectCoin()
+    {
+        
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }
